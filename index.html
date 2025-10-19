@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Samppank — Projektit</title>
+  <style>
+    :root{
+      --bg:#060606;
+      --panel: rgba(255,255,255,0.03);
+      --accent: #00ffae;
+      --muted: #bfc7c7;
+      --glass: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto;}
+    body{
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,255,174,0.04), transparent),
+                  radial-gradient(800px 400px at 90% 90%, rgba(0,255,174,0.02), transparent),
+                  var(--bg);
+      color:#e9f6f1;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding-bottom:60px;
+    }
+
+    header{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
+      border-bottom:1px solid rgba(0,255,174,0.06);
+      padding:12px 20px;
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .logo{
+      display:flex; gap:12px; align-items:center;
+    }
+    .avatar{
+      width:52px; height:52px; border-radius:50%;
+      overflow:hidden; flex:0 0 52px;
+      box-shadow: 0 6px 20px rgba(0,255,174,0.12);
+      border:1px solid rgba(0,255,174,0.08);
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .brand{
+      font-weight:700; letter-spacing:2px; color:var(--accent); font-size:1.15rem;
+      text-shadow: 0 0 10px rgba(0,255,174,0.12);
+    }
+    .sub{color:var(--muted); font-size:0.85rem}
+
+    nav{margin-left:auto; display:flex; gap:10px; align-items:center}
+    nav a{
+      color:var(--accent); text-decoration:none; font-weight:600; padding:8px 12px;
+      border-radius:10px; transition:all .18s;
+    }
+    nav a:hover{ background: rgba(0,255,174,0.06); color:#fff; transform:translateY(-2px) }
+
+    main{max-width:1100px;margin:28px auto;padding:0 18px}
+
+    .hero{
+      display:flex; gap:20px; align-items:center; padding:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:16px; border:1px solid rgba(255,255,255,0.02);
+    }
+    .hero-left{flex:0 0 120px}
+    .hero-left .big-avatar{width:120px;height:120px;border-radius:14px; overflow:hidden; border:1px solid rgba(0,255,174,0.06); box-shadow: 0 10px 40px rgba(0,255,174,0.06)}
+    .hero-left img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero-right{flex:1}
+    h1{margin:0;font-size:1.9rem;color:var(--accent)}
+    p.lead{color:var(--muted); margin-top:8px; font-size:0.98rem; line-height:1.5}
+
+    .meta{margin-top:12px; display:flex; gap:12px; align-items:center}
+    .chip{background:var(--glass); padding:6px 10px; border-radius:10px; color:var(--muted); font-weight:600; font-size:0.9rem}
+
+    /* Project grid */
+    .grid{display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin-top:22px}
+    .card{
+      background:var(--panel); border-radius:12px; padding:16px;
+      border:1px solid rgba(255,255,255,0.02); box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .card h3{margin:0;color:var(--accent);font-size:1.05rem}
+    .card p{color:var(--muted); margin:8px 0 12px; font-size:0.95rem}
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      background:transparent; border:1px solid rgba(0,255,174,0.12); color:var(--accent);
+      padding:8px 10px; border-radius:10px; cursor:pointer; font-weight:700;
+      transition:all .15s;
+    }
+    .btn:hover{ transform:translateY(-4px); box-shadow: 0 10px 30px rgba(0,255,174,0.06) }
+
+    /* code area */
+    .codewrap{margin-top:12px; display:none; position:relative}
+    pre{
+      background:#0b0b0b; padding:12px; border-radius:10px; overflow:auto; font-size:0.88rem;
+      border:1px solid rgba(255,255,255,0.02); color:#dfffe8;
+    }
+    .code-controls{position:absolute; top:8px; right:8px; display:flex; gap:8px}
+
+    .small{font-size:0.85rem;color:var(--muted)}
+    footer{max-width:1100px;margin:28px auto;padding:20px;border-top:1px dashed rgba(255,255,255,0.03); color:var(--muted); text-align:center}
+
+    /* responsive */
+    @media (max-width:640px){
+      .hero{flex-direction:column; align-items:flex-start}
+      nav{display:none}
+      header{padding:10px}
+    }
+
+    /* little accents */
+    .warn{color:#ffcf6b;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="avatar"><img src="samppank.png" alt="Samppank" /></div>
+      <div>
+        <div class="brand">SAMPPANK</div>
+        <div class="sub">a teen who creates small creative projects</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#projects">Projektit</a>
+      <a href="#about">Tietoa</a>
+      <a href="#contact">Yhteystiedot</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-left">
+        <div class="big-avatar"><img src="samppank.png" alt="Samppank profile" /></div>
+      </div>
+      <div class="hero-right">
+        <h1>Samppank — Small creative projects</h1>
+        <p class="lead">Hei! Olen Samppank — pieni projekteilija, joka tekee pelejä, skriptejä ja hauskoja demoja. Tässä kokoelma kaikista nykyisistä projekteista. Kaikki koodiesimerkit ovat nähtävillä ja kopioitavissa — suorita ne omalla vastuulla koneellasi.</p>
+
+        <div class="meta">
+          <div class="chip">Nimi: Samppank</div>
+          <div class="chip">Sähköposti: <a href="mailto:samppank@outlook.com" style="color:var(--accent); text-decoration:none">samppank@outlook.com</a></div>
+          <div class="chip">Sijainti: Rusko (FI)</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 style="color:var(--accent); margin-top:18px">Projektit</h2>
+      <div class="grid">
+        <!-- Dark Crypt (vain nimi + kuvaus) -->
+        <div class="card">
+          <h3>Dark Crypt</h3>
+          <p>Tekstipohjainen peli: tutkimusta, taistelua ja arvoituksia. (Pelin logiikka ei sisälly suoraan tähän sivuun.)</p>
+          <div class="actions">
+            <button class="btn" onclick="alert('Dark Crypt: projekti löytyy myöhemmin erillisenä versiona')">Lisätietoa</button>
+          </div>
+        </div>
+
+        <!-- This website as project -->
+        <div class="card">
+          <h3>Samppank Website</h3>
+          <p>Tämä nettisivu — itse esittelyprojekti. Sisältää portfolion ja koodinäytteet.</p>
+          <div class="actions">
+            <button class="btn" data-toggle="code" data-target="code-site">Näytä koodi</button>
+          </div>
+          <div class="codewrap" id="code-site">
+            <div class="code-controls">
+              <button class="btn" data-copy="site-code">Kopioi</button>
+            </div>
+            <pre id="site-code"><code><!--
+Tämä sivu itsessään on HTML/CSS/JS — tallenna index.html ja lisää samppank.png samaan kansioon.
+--></code></pre>
+          </div>
+        </div>
+
+        <!-- Dice Game -->
+        <div class="card">
+          <h3>Noppapeli (JavaScript)</h3>
+          <p>Yksinkertainen noppapeli: heitä noppaa, katso tulos. Voit laajentaa voittosääntöjä itse.</p>
+          <div class="actions">
+            <button class="btn" data-toggle="code" data-target="code-dice">Näytä koodi</button>
+          </div>
+          <div class="codewrap" id="code-dice">
+            <div class="code-controls">
+              <button class="btn" data-copy="dice-code">Kopioi</button>
+            </div>
+            <pre id="dice-code"><code>// Dice game (JavaScript) - lisää selaimen konsoliin tai omaan .js-tiedostoon
+function rollDice(sides = 6){
+  return Math.floor(Math.random() * sides) + 1;
+}
+
+// Esimerkki: heitetään kaksi noppaa ja tarkastellaan summaa
+function playRound(){
+  const a = rollDice(6);
+  const b = rollDice(6);
+  console.log(`Heitot: ${a} ja ${b} — summa ${a+b}`);
+  return {a,b,sum:a+b};
+}
+
+// Pienimuotoinen UI-demo (voit liittää HTML:ään)
+document.addEventListener('DOMContentLoaded', () => {
+  // Jos haluat UI:n, tee nappi ja kohde, joka kutsuu playRound()-funktiota
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Discord Webhook (Python) -->
+        <div class="card">
+          <h3>Discord webhook -lähetys (Python)</h3>
+          <p>Lähettää yksinkertaisen tekstiviestin Discord-kanavalle webhookin kautta. Vaihda <code>WEBHOOK_URL</code> omaan webhook-osoitteeseesi.</p>
+          <div class="actions">
+            <button class="btn" data-toggle="code" data-target="code-webhook">Näytä koodi</button>
+          </div>
+          <div class="codewrap" id="code-webhook">
+            <div class="code-controls">
+              <button class="btn" data-copy="webhook-code">Kopioi</button>
+            </div>
+            <pre id="webhook-code"><code># Discord webhook example (Python)
+# Asenna tarvittaessa: pip install requests
+import requests
+import json
+
+WEBHOOK_URL = "https://discord.com/api/webhooks/PUT_YOUR_WEBHOOK_HERE"  # korvaa omallasi
+
+def send_webhook(content="Hei! Tämä on testiviesti Samppankilta"):
+    data = {
+        "content": content,
+        "username": "Samppank Bot",
+        "embeds": [
+            {
+                "title": "Ilmoitus",
+                "description": "Tämä viesti lähetettiin webhookilla.",
+                "color": 5814783
+            }
+        ]
+    }
+    headers = {"Content-Type": "application/json"}
+    resp = requests.post(WEBHOOK_URL, data=json.dumps(data), headers=headers)
+    if resp.status_code == 204 or resp.status_code == 200:
+        print("Webhook lähetetty onnistuneesti.")
+    else:
+        print(f"Virhe: {resp.status_code} - {resp.text}")
+
+if __name__ == '__main__':
+    send_webhook("Testiviesti: webhook toimii!")</code></pre>
+          </div>
+        </div>
+
+        <!-- Number Guess -->
+        <div class="card">
+          <h3>Numeron arvaus -peli (JavaScript)</h3>
+          <p>Pelaaja arvaa satunnaisen numeron 1–100 saaden vihjeen suurempi/pienempi.</p>
+          <div class="actions">
+            <button class="btn" data-toggle="code" data-target="code-guess">Näytä koodi</button>
+          </div>
+          <div class="codewrap" id="code-guess">
+            <div class="code-controls">
+              <button class="btn" data-copy="guess-code">Kopioi</button>
+            </div>
+            <pre id="guess-code"><code>// Number guess game (JavaScript)
+(function(){
+  let secret = Math.floor(Math.random()*100) + 1;
+  let attempts = 0;
+  console.log("Aloita arvaaminen (1-100). Käytä guess(n) funktiota konsolissa.");
+
+  window.guess = function(n){
+    attempts++;
+    if(n === secret){
+      console.log(`Oikein! Löysit numeron ${secret} ${attempts} yrityksellä.`);
+      // uusi kierros
+      secret = Math.floor(Math.random()*100) + 1;
+      attempts = 0;
+      console.log("Uusi numero luotu. Arvaa taas!");
+    } else if(n < secret){
+      console.log("Liian pieni.");
+    } else {
+      console.log("Liian suuri.");
+    }
+  };
+})();</code></pre>
+          </div>
+        </div>
+
+        <!-- Clock Game -->
+        <div class="card">
+          <h3>Ajan näyttö -peli (Stop the second)</h3>
+          <p>Pelaajan tehtävänä on pysäyttää ajannäyttö kun sekunnit näyttävät tiettyä lukua — testi tarkasta ajantajua.</p>
+          <div class="actions">
+            <button class="btn" data-toggle="code" data-target="code-clock">Näytä koodi</button>
+          </div>
+          <div class="codewrap" id="code-clock">
+            <div class="code-controls">
+              <button class="btn" data-copy="clock-code">Kopioi</button>
+            </div>
+            <pre id="clock-code"><code>// Clock game (JavaScript) - Stop the second
+// Tämä UI-esimerkki voidaan liittää HTML:ään: nappi "Start"/"Stop" ja tekstikenttä tulokselle.
+(function(){
+  let running = false;
+  let interval;
+  let target = Math.floor(Math.random() * 60); // tavoitteena saada tämä sekunti
+  console.log("Tavoiteltu sekunti:", target);
+
+  window.startClockGame = function(){
+    if(running) return;
+    running = true;
+    interval = setInterval(() => {
+      const d = new Date();
+      process.stdout && process.stdout.write ? null : null;
+      // Konsoli-demo: näyttää sekunnin - käytä selainta ja DOM:ia parempaan UI:hin
+      console.log("Sekunti:", d.getSeconds());
+    }, 800);
+    console.log("Peli käynnissä. soita stopClockGame() pysäyttääksesi.");
+  };
+
+  window.stopClockGame = function(){
+    if(!running) return;
+    clearInterval(interval);
+    running = false;
+    const sec = new Date().getSeconds();
+    console.log("Pysäytit sekunnin:", sec);
+    if(sec === target){
+      console.log("Voitto — osuit täsmälleen!");
+    } else {
+      console.log("Ei osunut. Tavoite oli:", target);
+    }
+    target = Math.floor(Math.random() * 60);
+    console.log("Uusi tavoite:", target);
+  };
+})();</code></pre>
+          </div>
+        </div>
+
+        <!-- File Creator Example (Batch + Python) -->
+        <div class="card">
+          <h3>Tiedostojen luontiesimerkki (Batch &amp; Python)</h3>
+          <p>Esimerkit luovat 100 tyhjää .txt -tiedostoa paikalliseen kansioon. Älä aja mitään mitä et ymmärrä — nämä tiedostot luodaan vain jos suoritat itse skriptin omalla koneellasi.</p>
+          <div class="actions">
+            <button class="btn" data-toggle="code" data-target="code-batch">Näytä batch (.bat)</button>
+            <button class="btn" data-toggle="code" data-target="code-pyfiles">Näytä Python</button>
+          </div>
+
+          <div class="codewrap" id="code-batch">
+            <div class="code-controls">
+              <button class="btn" data-copy="batch-code">Kopioi</button>
+            </div>
+            <pre id="batch-code"><code>@echo off
+for /l %%i in (1,1,100) do (
+    echo. > tiedosto_%%i.txt
+)
+echo Luotu 100 tyhjää tekstitiedostoa!
+pause</code></pre>
+          </div>
+
+          <div class="codewrap" id="code-pyfiles">
+            <div class="code-controls">
+              <button class="btn" data-copy="pyfiles-code">Kopioi</button>
+            </div>
+            <pre id="pyfiles-code"><code># Python example: create 100 empty text files
+# Tämä luo tiedostot siihen kansioon, jossa skripti suoritetaan.
+import os
+
+for i in range(1, 101):
+    filename = f"tiedosto_{i}.txt"
+    open(filename, "w", encoding="utf-8").close()
+print("Luotu 100 tiedostoa.")</code></pre>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="about" style="margin-top:26px">
+      <h2 style="color:var(--accent)">Tietoa</h2>
+      <div class="card" style="margin-top:10px">
+        <h3>Esittely</h3>
+        <p class="small">Hello — I'm Samppank. I'm a teen who creates small creative projects: simple games, scripts and demos. I like tinkering with scooters, building small web projects and coding fun utilities. This page shows examples and snippets. If you use any code, make sure you understand it and run it only on your own machine.</p>
+        <p style="margin-top:8px;color:var(--muted)">Projekti kuvaus ja yhteystiedot alla.</p>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:18px">
+      <h2 style="color:var(--accent)">Yhteystiedot</h2>
+      <div class="card" style="margin-top:10px">
+        <p class="small"><strong>Nimi:</strong> Samppank</p>
+        <p class="small"><strong>Sähköposti:</strong> <a href="mailto:samppank@outlook.com" style="color:var(--accent)">samppank@outlook.com</a></p>
+        <p class="small"><strong>Lisätieto:</strong> This is my picture and I'm a teen who makes small projects.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Samppank — siten että koodit ovat esimerkkikehyksiä. Kopioi &amp; käytä vastuullisesti.
+  </footer>
+
+  <script>
+    // Toggle show/hide code blocks
+    document.querySelectorAll('[data-toggle="code"]').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const id = btn.getAttribute('data-target');
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        // scroll into view when opening
+        if(el.style.display === 'block') el.scrollIntoView({behavior:'smooth', block:'center'});
+      });
+    });
+
+    // Copy to clipboard functionality
+    document.querySelectorAll('[data-copy]').forEach(btn=>{
+      btn.addEventListener('click', async e=>{
+        const id = btn.getAttribute('data-copy');
+        const el = document.getElementById(id);
+        if(!el) return;
+        try{
+          // get text content
+          const text = el.innerText;
+          await navigator.clipboard.writeText(text);
+          btn.textContent = 'Kopioitu!';
+          setTimeout(()=> btn.textContent = 'Kopioi', 1500);
+        }catch(err){
+          console.error('Kopiointi epäonnistui', err);
+          btn.textContent = 'Kopiointi epäonnistui';
+          setTimeout(()=> btn.textContent = 'Kopioi', 1500);
+        }
+      });
+    });
+
+    // Small enhancement: replace placeholder comment in "site code" with brief hint
+    document.getElementById('site-code').querySelector('code').innerText =
+`Tämä HTML-tiedosto (index.html) sisältää Samppankin sivun.
+Tallenna samppank.png samaan kansioon. Muokkaa tekstejä ja korvaa kuvat halutessasi.
+Kaikki koodilohkot tällä sivulla ovat kopioitavissa.`
+
+  </script>
+</body>
+</html>
